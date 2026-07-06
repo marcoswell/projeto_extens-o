@@ -179,6 +179,11 @@ elif pagina == "Análise: Câncer de Colo de Útero":
         fig_exames_ano = px.bar(exames_ano, x='Ano', y='Exames', 
                                 color_discrete_sequence=['#66b3ff'], text_auto=True)
         fig_exames_ano.update_xaxes(type='category') # Garantir que o ano não apareça quebrado (ex: 2022.5)
+        # Ajustando a formatação dos números para o padrão brasileiro
+        fig_exames_ano.update_traces(
+        text=exames_ano['Exames'].apply(lambda x: f"{x:,.0f}".replace(",", ".")),
+        texttemplate='%{text}',
+        textposition='inside')
         st.plotly_chart(fig_exames_ano, use_container_width=True)
         
         st.info("**O que esse gráfico quer dizer?**\nAjuda a entender se a procura pelo exame preventivo está aumentando ou caindo ao longo dos anos.")
